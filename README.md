@@ -85,7 +85,7 @@ Pedro Pathing drives the robot along smooth paths in autonomous. It has to be tu
 > ❗ `pedro/Constants.java` currently returns `null`. **Any OpMode that uses Pedro will crash until tuning is done** and Constants is filled in.
 
 ### Step 1 — Register the tuners
-The tuners only appear once they are registered in `pedro/Tuning.java`. Add a `@Tuner` method for each one you need. For our robot (mecanum + Pinpoint):
+The tuners only appear once they are registered in `pedro/Tuning.java`, with one `@Tuner` method each. The two our robot (mecanum + Pinpoint) needs first are already registered:
 
 ```java
 package org.firstinspires.ftc.teamcode.pedro;
