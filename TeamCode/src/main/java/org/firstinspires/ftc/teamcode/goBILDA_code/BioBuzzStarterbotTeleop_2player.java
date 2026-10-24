@@ -292,6 +292,7 @@ public class BioBuzzStarterbotTeleop_2player extends OpMode {
         if (gamepad2.right_bumper && launcher.getVelocity() > LAUNCHER_MIN_VELOCITY) {
             windmillServo.setPower(-1);
             windmillMotor.setPower(-1);
+            windmillMotor.setPower(-1);
             
             intakePower += 0.5;
         } else {
