@@ -6,6 +6,7 @@ This repository is built on the official [FTC SDK 12.0](https://github.com/FIRST
 
 - **goBILDA Pinpoint** odometry. The driver is built into the SDK, and this repo includes an example OpMode for it.
 - **[Pedro Pathing](https://pedropathing.com/)** for autonomous path following, along with its tuners.
+- **[Panels](https://panels.bylazar.com/)**, a browser dashboard for telemetry, graphs, a field view and OpMode control.
 
 ---
 
@@ -118,6 +119,14 @@ Once Constants has the drivetrain and Pinpoint settings, register and run:
 
 Both of these take the drivetrain and localizer from Constants, so they can't run until Steps 1–2 are done. The [Pedro Pathing docs](https://pedropathing.com/) walk through each tuner in detail.
 
+### Panels dashboard
+Panels starts on its own whenever the Robot Controller app is running. You don't need to start it from an OpMode.
+
+1. Connect your laptop to the **robot's Wi-Fi**.
+2. Open **http://192.168.43.1:8001** in a browser.
+
+If the page loads but shows nothing, check the robot's OpMode list for **Enable/Disable Panels** and make sure Panels is turned on. Pedro's tuning page (port 10158) is separate from Panels and works whether or not Panels is enabled.
+
 ---
 
 ## 6. Working as a team with git
@@ -135,5 +144,6 @@ Both of these take the drivetrain and localizer from Constants, so they can't ru
 - [FTC Docs](https://ftc-docs.firstinspires.org/) — official tutorials for Android Studio, configuration and sensors
 - [FTC Javadoc](https://javadoc.io/doc/org.firstinspires.ftc) — reference for SDK classes
 - [Pedro Pathing docs](https://pedropathing.com/)
+- [Panels docs](https://panels.bylazar.com/)
 - [goBILDA](https://www.gobilda.com/) — search "Pinpoint" for the product page and user guide
 - [FTC SDK release notes](https://github.com/FIRST-Tech-Challenge/FtcRobotController/releases) — what changed in each SDK version

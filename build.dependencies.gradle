@@ -1,6 +1,7 @@
 repositories {
     mavenCentral()
     maven { url 'https://repo.dairy.foundation/releases/'} // Needed for Pedro Pathing
+    maven { url 'https://mymaven.bylazar.com/releases' } // Needed for Panels
     google() // Needed for androidx
 }
 
@@ -17,5 +18,7 @@ dependencies {
 
     implementation 'com.pedropathing:revhub:3.0.2'
     implementation 'com.pedropathing:tuning:1.0.1'
+
+    implementation 'com.bylazar:fullpanels:1.0.19'
 }
 
