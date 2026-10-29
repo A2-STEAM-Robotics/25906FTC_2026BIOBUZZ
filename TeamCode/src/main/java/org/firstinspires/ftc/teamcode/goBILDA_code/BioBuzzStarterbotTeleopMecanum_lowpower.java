@@ -78,6 +78,9 @@ public class BioBuzzStarterbotTeleopMecanum_lowpower extends OpMode {
     public final int LAUNCHER_TARGET_VELOCITY = 1250; //2678 RPM
     public final int LAUNCHER_MIN_VELOCITY = 1200; //2571 RPM
 
+    public final int LAUNCHER_MIN_VELOCITY_LOWPOWER = 900;
+    public final int LAUNCHER_TARGET_VELOCITY_LOWPOWER = 950;
+
 
     /*
      * These four variables store the power we need to apply to the motors. In other cases, we may
@@ -233,7 +236,7 @@ public class BioBuzzStarterbotTeleopMecanum_lowpower extends OpMode {
          * Show motor powers on the Driver Station via telemetry.
          */
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftFrontPower, rightFrontPower);
-        telemetry.addData("Triggers", "left (%.2f, right (%.2f)",gamepad1.left_trigger, gamepad1.right_trigger);
+        telemetry.addData("Triggers", "left (%.2f, right (%.2f)", gamepad1.left_trigger, gamepad1.right_trigger);
     }
 
     /*
@@ -283,6 +286,12 @@ public class BioBuzzStarterbotTeleopMecanum_lowpower extends OpMode {
         } else {
             launcher.setVelocity(0);
         }
+    }
+       if (gamepad1.left_bumper) {
+        launcher.setVelocity(LAUNCHER_TARGET_VELOCITY_LOWPOWER);
+    } else {
+        launcher.setVelocity(0);
+        }
 
         /*
          * Here we ask if the driver is currently pressing the right bumper, AND the launcher is
@@ -301,21 +310,21 @@ public class BioBuzzStarterbotTeleopMecanum_lowpower extends OpMode {
             windmillMotor.setPower(0);
             windmillMotor2.setPower(0);
         }
-            /* lowpower idea*/
-            if(gamepad1.left_bumper) {
-            launcher.setVelocity(900);
-            windmillServo.setPower(-10);
-            windmillMotor.setPower(-1);
-            windmillMotor2.setPower(-1);
-            intakePower += 0.5;
-        } else {
-            windmillServo.setPower(0);
-            windmillMotor.setPower(0);
-            launcher.setVelocity(0);
-            windmillMotor2.setPower(0);
-            intakePower+=0;
-        }
-    }
-        
-    }
 
+            /* lowpower idea*/
+            if (gamepad1.left_bumper && launcher.getVelocity() > LAUNCHER_MIN_VELOCITY_LOWPOWER) {
+
+                windmillServo.setPower(-10);
+                windmillMotor.setPower(-1);
+                windmillMotor2.setPower(-1);
+                intakePower += 0.5;
+            } else {
+                windmillServo.setPower(0);
+                windmillMotor.setPower(0);
+                windmillMotor2.setPower(0);
+                intakePower += 0;
+            }
+        }
+
+    }
+}
