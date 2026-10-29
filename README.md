@@ -120,6 +120,8 @@ Once Constants has the drivetrain and Pinpoint settings, register and run:
 Both of these take the drivetrain and localizer from Constants, so they can't run until Steps 1–2 are done. The [Pedro Pathing docs](https://pedropathing.com/) walk through each tuner in detail.
 
 ### Panels dashboard
+> ⏸️ **Panels is currently turned off.** Its two lines in `build.dependencies.gradle` are commented out. To turn it back on, uncomment both lines. Then sync once while your laptop is on a network with **internet**, not the robot's Wi-Fi, so Gradle can download it.
+
 Panels starts on its own whenever the Robot Controller app is running. You don't need to start it from an OpMode.
 
 1. Connect your laptop to the **robot's Wi-Fi**.
