@@ -20,7 +20,7 @@
  *   SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.goBILDA_code;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
@@ -283,14 +283,10 @@ public class BioBuzzStarterbotTeleopMecanum_lowpower extends OpMode {
          */
         if (gamepad1.right_bumper) {
             launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
+        } else if (gamepad1.left_bumper) {
+            launcher.setVelocity(LAUNCHER_TARGET_VELOCITY_LOWPOWER);
         } else {
             launcher.setVelocity(0);
-        }
-    }
-       if (gamepad1.left_bumper) {
-        launcher.setVelocity(LAUNCHER_TARGET_VELOCITY_LOWPOWER);
-    } else {
-        launcher.setVelocity(0);
         }
 
         /*
@@ -299,8 +295,14 @@ public class BioBuzzStarterbotTeleopMecanum_lowpower extends OpMode {
          * windmill servo to start feeding the elements into the launcher motor. We also
          * add some power to the intake power. This can sometimes help dislodge stuck elements from
          * inside the hopper.
+         * The left bumper does the same thing for a low power shot, using the lower minimum velocity.
          */
         if (gamepad1.right_bumper && launcher.getVelocity() > LAUNCHER_MIN_VELOCITY) {
+            windmillServo.setPower(-1);
+            windmillMotor.setPower(-1);
+            windmillMotor2.setPower(-1);
+            intakePower += 0.5;
+        } else if (gamepad1.left_bumper && launcher.getVelocity() > LAUNCHER_MIN_VELOCITY_LOWPOWER) {
             windmillServo.setPower(-1);
             windmillMotor.setPower(-1);
             windmillMotor2.setPower(-1);
@@ -310,21 +312,5 @@ public class BioBuzzStarterbotTeleopMecanum_lowpower extends OpMode {
             windmillMotor.setPower(0);
             windmillMotor2.setPower(0);
         }
-
-            /* lowpower idea*/
-            if (gamepad1.left_bumper && launcher.getVelocity() > LAUNCHER_MIN_VELOCITY_LOWPOWER) {
-
-                windmillServo.setPower(-10);
-                windmillMotor.setPower(-1);
-                windmillMotor2.setPower(-1);
-                intakePower += 0.5;
-            } else {
-                windmillServo.setPower(0);
-                windmillMotor.setPower(0);
-                windmillMotor2.setPower(0);
-                intakePower += 0;
-            }
-        }
-
     }
 }
