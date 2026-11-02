@@ -119,6 +119,16 @@ Once Constants has the drivetrain and Pinpoint settings, register and run:
 
 Both of these take the drivetrain and localizer from Constants, so they can't run until Steps 1–2 are done. The [Pedro Pathing docs](https://pedropathing.com/) walk through each tuner in detail.
 
+### Step 4 — Drive a path from the Visualizer
+`opmodes/VisualizerAuto.java` drives any path you draw in the [Pedro Pathing Visualizer](https://visualizer.pedropathing.com):
+1. Draw your path. Put the start point where the robot will sit on the field.
+2. Click **Export Code** and choose **Include: Coordinates only**. Copy the code.
+3. In `VisualizerAuto.java`, replace everything between **PASTE START** and **PASTE END** with your code.
+4. In `pathsInOrder()`, list your path methods in order, for example `path1(), path2(),`.
+5. Deploy, place the robot at the start point, and run **Visualizer Auto**.
+
+Until tuning is finished and `Constants.create()` returns a real Follower, the OpMode shows a "Pedro isn't tuned yet" message instead of driving.
+
 ### Panels dashboard
 > ⏸️ **Panels is currently turned off.** Its two lines in `build.dependencies.gradle` are commented out. To turn it back on, uncomment both lines. Then sync once while your laptop is on a network with **internet**, not the robot's Wi-Fi, so Gradle can download it.
 
