@@ -34,29 +34,34 @@ public class VisualizerAuto extends LinearOpMode {
     // Everything between here and PASTE END is replaced by the Visualizer's
     // "Coordinates only" export. This example drives forward 28 inches, turning to
     // face left, then curves back to the start.
-
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
     private final Pose start = poseFactory.of(56, 8, 90);
-    private final Pose path1 = poseFactory.of(56, 36, 180);
-    private final Pose path2 = poseFactory.of(56, 8, 90);
-    private final Pose path2Control1 = poseFactory.of(80, 22, 0);
+    private final Pose path1 = poseFactory.of(56.308, 37.1987, 180);
+    private final Pose point2 = poseFactory.of(23.1798, 54.189, 152.8482);
+    private final Pose point3 = poseFactory.of(11.0064, 108.0251, 102.7414);
 
     public Path path1() {
         return Paths.line(start, path1).linear(start, path1);
     }
 
     public Path path2() {
-        return Paths.curve(path1, path2Control1, path2).linear(path1, path2);
+        return Paths.line(path1, point2).tangent();
+    }
+
+    public Path path3() {
+        return Paths.line(point2, point3).tangent();
     }
     // ====================== PASTE END ======================
 
     // The paths to drive, in order. Use the method names from your pasted code,
-    // with () after each one.
+    // with () after each one. Every "public Path" method above needs a line here,
+    // or the robot will skip it.
     private Path[] pathsInOrder() {
         return new Path[] {
                 path1(),
                 path2(),
+                path3(),
         };
     }
 
