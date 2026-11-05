@@ -83,7 +83,7 @@ The Pinpoint tracks the robot's X, Y and heading from two odometry pods and a bu
 
 Pedro Pathing drives the robot along smooth paths in autonomous. It has to be tuned for our robot before it will work.
 
-> ❗ `pedro/Constants.java` currently returns `null`. **Any OpMode that uses Pedro will crash until tuning is done** and Constants is filled in.
+> ✅ Tuning is done. `pedro/Constants.java` has the drivetrain, Pinpoint and Foresight settings, and `Constants.create(hardwareMap)` returns a ready-to-use `Follower`. If the robot's drivetrain or pods change, re-run the tuners and update Constants.
 
 ### Step 1 — Register the tuners
 The tuners only appear once they are registered in `pedro/Tuning.java`, with one `@Tuner` method each. The two our robot (mecanum + Pinpoint) needs first are already registered:

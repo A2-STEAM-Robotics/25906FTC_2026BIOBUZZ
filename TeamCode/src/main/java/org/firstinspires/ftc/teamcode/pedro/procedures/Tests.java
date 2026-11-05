@@ -331,7 +331,7 @@ class TestsOdometry extends TuningOpMode<Boolean> {
     private boolean passedHeading = false;
 
     public TestsOdometry(Function<HardwareMap, Drivetrain> drivetrainFunction, Function<HardwareMap, Localizer> localizerFunction) {
-        super("Localization Test", "Verifies localization and manual control.", true);
+        super("Odometry Test", "Drives the robot by itself: forward, left, then a turn (about 1 second each). Then it checks the odometry pod directions.", true);
         this.drivetrainFunction = drivetrainFunction;
         this.localizerFunction = localizerFunction;
     }

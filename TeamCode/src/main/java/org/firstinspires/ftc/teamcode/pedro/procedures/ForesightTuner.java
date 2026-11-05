@@ -157,8 +157,18 @@ class ForwardVelocity extends TuningOpMode<Double> {
         localizer.setPose(Pose.zero());
         localizer.update();
 
-        while (!end) {
+        ElapsedTime safetyTimer = new ElapsedTime();
+        while (!end && !isStopRequested()) {
             localizer.update();
+            telemetry.addData("x (inches)", "%.1f", localizer.pose().x());
+            telemetry.addData("y (inches)", "%.1f", localizer.pose().y());
+            telemetry.addData("Time (seconds)", "%.1f", safetyTimer.seconds());
+            telemetry.update();
+            if (safetyTimer.seconds() > 3) {
+                // Safety: give up after 3 seconds so the robot can't drive forever.
+                drivetrain.stop();
+                break;
+            }
             if (Math.abs(localizer.pose().x()) > distance) {
                 end = true;
                 drivetrain.stop();
@@ -215,8 +225,18 @@ class StrafeVelocity extends TuningOpMode<Double> {
         localizer.setPose(Pose.zero());
         localizer.update();
 
-        while (!end) {
+        ElapsedTime safetyTimer = new ElapsedTime();
+        while (!end && !isStopRequested()) {
             localizer.update();
+            telemetry.addData("x (inches)", "%.1f", localizer.pose().x());
+            telemetry.addData("y (inches)", "%.1f", localizer.pose().y());
+            telemetry.addData("Time (seconds)", "%.1f", safetyTimer.seconds());
+            telemetry.update();
+            if (safetyTimer.seconds() > 3) {
+                // Safety: give up after 3 seconds so the robot can't drive forever.
+                drivetrain.stop();
+                break;
+            }
             if (Math.abs(localizer.pose().y()) > distance) {
                 end = true;
                 drivetrain.stop();
@@ -278,8 +298,18 @@ class ForwardDeceleration extends TuningOpMode<Double> {
 
         drivetrain.drive(power, false);
 
-        while (!stopping) {
+        ElapsedTime safetyTimer = new ElapsedTime();
+        while (!stopping && !isStopRequested()) {
             localizer.update();
+            telemetry.addData("x (inches)", "%.1f", localizer.pose().x());
+            telemetry.addData("y (inches)", "%.1f", localizer.pose().y());
+            telemetry.addData("Time (seconds)", "%.1f", safetyTimer.seconds());
+            telemetry.update();
+            if (safetyTimer.seconds() > 3) {
+                // Safety: give up after 3 seconds so the robot can't drive forever.
+                drivetrain.stop();
+                break;
+            }
             double currentVelocity = localizer.twist().toVector2D().x();
             if (Math.abs(currentVelocity) > velocity) {
                 previousVelocity = currentVelocity;
@@ -294,7 +324,7 @@ class ForwardDeceleration extends TuningOpMode<Double> {
 
         boolean end = false;
 
-        while (!end) {
+        while (!end && !isStopRequested()) {
             localizer.update();
             drivetrain.stop(false);
             double currentVelocity = localizer.twist().toVector2D().x();
@@ -372,8 +402,18 @@ class StrafeDeceleration extends TuningOpMode<Double> {
 
         drivetrain.drive(power, false);
 
-        while (!stopping) {
+        ElapsedTime safetyTimer = new ElapsedTime();
+        while (!stopping && !isStopRequested()) {
             localizer.update();
+            telemetry.addData("x (inches)", "%.1f", localizer.pose().x());
+            telemetry.addData("y (inches)", "%.1f", localizer.pose().y());
+            telemetry.addData("Time (seconds)", "%.1f", safetyTimer.seconds());
+            telemetry.update();
+            if (safetyTimer.seconds() > 3) {
+                // Safety: give up after 3 seconds so the robot can't drive forever.
+                drivetrain.stop();
+                break;
+            }
             double currentVelocity = localizer.twist().toVector2D().y();
             if (Math.abs(currentVelocity) > velocity) {
                 previousVelocity = currentVelocity;
@@ -388,7 +428,7 @@ class StrafeDeceleration extends TuningOpMode<Double> {
 
         boolean end = false;
 
-        while (!end) {
+        while (!end && !isStopRequested()) {
             drivetrain.stop(false);
             localizer.update();
             double currentVelocity = localizer.twist().toVector2D().y();
