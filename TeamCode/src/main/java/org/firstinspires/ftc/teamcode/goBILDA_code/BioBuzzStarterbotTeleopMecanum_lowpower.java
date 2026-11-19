@@ -313,10 +313,10 @@ public class BioBuzzStarterbotTeleopMecanum_lowpower extends OpMode {
             intakePower += 0.5;
         } else if (gamepad1.dpad_down) {
             flowerservo.setPosition(1.0);
-            flowerservo2.setPosition(-1.0);
+            flowerservo2.setPosition(1.0);
         } else if (gamepad1.dpad_up) {
             flowerservo.setPosition(0);
-            flowerservo2.setPosition(-0);
+            flowerservo2.setPosition(0);
     } else {
             windmillServo.setPower(0);
             windmillMotor.setPower(0);
