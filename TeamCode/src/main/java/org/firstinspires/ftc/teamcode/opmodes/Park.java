@@ -106,11 +106,11 @@ public class Park extends LinearOpMode {
 
     private void shoot(double length){
         launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
-        while(launcher.getVelocity()<LAUNCHER_MIN_VELOCITY){
+        while(opModeIsActive() && launcher.getVelocity()<LAUNCHER_MIN_VELOCITY){
             idle();
         }
         ElapsedTime timer = new ElapsedTime();
-        while( timer.seconds() < length) {
+        while(opModeIsActive() && timer.seconds() < length) {
            if(launcher.getVelocity()<LAUNCHER_MIN_VELOCITY){
                indexer1.setPower(0);
                indexer2.setPower(0);

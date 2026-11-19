@@ -85,17 +85,10 @@ public class VisualizerAuto extends LinearOpMode {
     // private DcMotor intake;
     // private DcMotorEx launcher;
 
-    private DcMotor launcher;
-    private DcMotor indexer1;
-    private DcMotor indexer2;
     // Runs once during Init. Set up your motors and servos here.
     private void setUpMechanisms() {
         // Example:
         // intake = hardwareMap.get(DcMotor.class, "intake");
-        launcher=hardwareMap.get(DcMotor.class, "intake");
-        indexer1=hardwareMap.get(DcMotor.class, "intake");
-        indexer2=hardwareMap.get(DcMotor.class, "intake");
-
     }
 
     // Runs once, right as a path starts. Good for turning things on.
