@@ -31,6 +31,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /*
  * This file includes a teleop (driver-controlled) file for the goBILDA® StarterBot with Mecanum
@@ -47,7 +48,7 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
  * we will also need to adjust the "PIDF" coefficients with some that are a better fit for our application.
  */
 
-@TeleOp(name = "Mec BioBuzz StarterBot lowpower", group = "StarterBot")
+@TeleOp(name = "Mec BioBuzz TESTING", group = "StarterBot")
 //@Disabled
 public class BioBuzzStarterbotTeleopMecanum_lowpower extends OpMode {
 
@@ -63,6 +64,8 @@ public class BioBuzzStarterbotTeleopMecanum_lowpower extends OpMode {
     private CRServo windmillServo = null;
     private DcMotor windmillMotor = null;
     private DcMotor windmillMotor2 = null;
+    private Servo flowerservo = null;
+    private Servo flowerservo2 = null;
 
 
     /*
@@ -76,7 +79,7 @@ public class BioBuzzStarterbotTeleopMecanum_lowpower extends OpMode {
      * enough to make a successful throw.
      */
     public final int LAUNCHER_TARGET_VELOCITY = 1250; //2678 RPM
-    public final int LAUNCHER_MIN_VELOCITY = 1200; //2571 RPM
+    public final int LAUNCHER_MIN_VELOCITY = 1210; //2571 RPM
 
     public final int LAUNCHER_MIN_VELOCITY_LOWPOWER = 900;
     public final int LAUNCHER_TARGET_VELOCITY_LOWPOWER = 950;
@@ -117,7 +120,8 @@ public class BioBuzzStarterbotTeleopMecanum_lowpower extends OpMode {
         rightIntakeServo = hardwareMap.get(CRServo.class, "right_intake_servo");
         windmillMotor = hardwareMap.get(DcMotor.class, "windmillmotor");
         windmillMotor2 = hardwareMap.get(DcMotor.class, "windmillmotor2");
-
+        flowerservo = hardwareMap.get(Servo.class, "flowerservo");
+        flowerservo2 = hardwareMap.get(Servo.class, "flowerservo2");
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
          * because the axles point in opposite directions. Pushing the left stick forward
@@ -307,7 +311,13 @@ public class BioBuzzStarterbotTeleopMecanum_lowpower extends OpMode {
             windmillMotor.setPower(-1);
             windmillMotor2.setPower(-1);
             intakePower += 0.5;
-        } else {
+        } else if (gamepad1.dpad_down) {
+            flowerservo.setPosition(1.0);
+            flowerservo2.setPosition(-1.0);
+        } else if (gamepad1.dpad_up) {
+            flowerservo.setPosition(0);
+            flowerservo2.setPosition(-0);
+    } else {
             windmillServo.setPower(0);
             windmillMotor.setPower(0);
             windmillMotor2.setPower(0);

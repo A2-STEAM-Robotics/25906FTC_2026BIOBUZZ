@@ -62,6 +62,7 @@ public class BioBuzzStarterbotTeleop_2player extends OpMode {
     private CRServo rightIntakeServo = null;
     private CRServo windmillServo = null;
     private DcMotor windmillMotor = null;
+    private DcMotor windmillMotor2 = null;
 
 
     /*
@@ -75,7 +76,7 @@ public class BioBuzzStarterbotTeleop_2player extends OpMode {
      * enough to make a successful throw.
      */
     public final int LAUNCHER_TARGET_VELOCITY = 1250; //2678 RPM
-    public final int LAUNCHER_MIN_VELOCITY = 1200; //2571 RPM
+    public final int LAUNCHER_MIN_VELOCITY = 1215; //2571 RPM
 
 
     /*
@@ -112,6 +113,7 @@ public class BioBuzzStarterbotTeleop_2player extends OpMode {
         leftIntakeServo = hardwareMap.get(CRServo.class, "left_intake_servo");
         rightIntakeServo = hardwareMap.get(CRServo.class, "right_intake_servo");
         windmillMotor = hardwareMap.get(DcMotor.class, "windmillmotor");
+        windmillMotor2 = hardwareMap.get(DcMotor.class, "windmillmotor2");
 
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
@@ -146,7 +148,7 @@ public class BioBuzzStarterbotTeleop_2player extends OpMode {
 
         launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(40, 0, 0, 12.5));
+        launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(45, 0, 0, 12.5));
 
         /*
          * set Feeders to an initial value to initialize the servo controller
@@ -214,6 +216,8 @@ public class BioBuzzStarterbotTeleop_2player extends OpMode {
         intakePower = gamepad2.right_trigger - gamepad2.left_trigger;
 
         launch();
+        telemetry.addData("velocity", launcher.getVelocity());
+
 
         /*
          * Here we set our intake motor and servos to their intake power. The order of operations
@@ -290,14 +294,15 @@ public class BioBuzzStarterbotTeleop_2player extends OpMode {
          * inside the hopper.
          */
         if (gamepad2.right_bumper && launcher.getVelocity() > LAUNCHER_MIN_VELOCITY) {
-            windmillServo.setPower(-1);
-            windmillMotor.setPower(-1);
-            windmillMotor.setPower(-1);
+            windmillServo.setPower(-.5);
+            windmillMotor2.setPower(-.75);
+            windmillMotor.setPower(-.5);
             
             intakePower += 0.5;
         } else {
             windmillServo.setPower(0);
             windmillMotor.setPower(0);
+            windmillMotor2.setPower(0);
         }
     }
 }

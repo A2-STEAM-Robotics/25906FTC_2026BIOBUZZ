@@ -1,17 +1,15 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
-import static com.pedropathing.api.Paths.*;
 import com.pedropathing.api.Paths;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
-import com.pedropathing.paths.interpolator.Interpolator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants;
@@ -33,8 +31,8 @@ import org.firstinspires.ftc.teamcode.pedro.Constants;
  * Field coordinates are in inches (0 to 144) and headings are in degrees, the same as in
  * the Visualizer.
  */
-@Autonomous(name = "Visualizer Auto", group = "Pedro")
-public class VisualizerAuto extends LinearOpMode {
+@Autonomous(name = "Shoot Park", group = "Pedro")
+public class ShootPark extends LinearOpMode {
 
     // ===================== PASTE START =====================
     // Everything between here and PASTE END is replaced by the Visualizer's
@@ -42,21 +40,13 @@ public class VisualizerAuto extends LinearOpMode {
     // face left, then curves back to the start.
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
-    private final Pose start = poseFactory.of(56, 8, 90);
-    private final Pose path1 = poseFactory.of(56.308, 37.1987, 180);
-    private final Pose point2 = poseFactory.of(23.1798, 54.189, 152.8482);
-    private final Pose point3 = poseFactory.of(11.0064, 108.0251, 102.7414);
+    private final Pose start = poseFactory.of(56, 8.3917, 270);
+    private final Pose path1 = poseFactory.of(13.1093, 96.3211, 270);
+    private final Pose path1Control1 = poseFactory.of(0, 21.8728, 0);
+    private final Pose path1Control2 = poseFactory.of(39.7402, 75.7221, 0);
 
     public Path path1() {
-        return Paths.line(start, path1).linear(start, path1);
-    }
-
-    public Path path2() {
-        return Paths.line(path1, point2).tangent();
-    }
-
-    public Path path3() {
-        return Paths.line(point2, point3).tangent();
+        return Paths.curve(start, path1Control1, path1Control2, path1).linear(start, path1);
     }
     // ====================== PASTE END ======================
 
@@ -65,13 +55,13 @@ public class VisualizerAuto extends LinearOpMode {
     // or the robot will skip it.
     private Path[] pathsInOrder() {
         return new Path[] {
-                path1(),
-                path2(),
-                path3(),
+                path1()
+
         };
     }
 
-    // Where the robot starts. The Visualizer names this pose "start" unless you renamed
+    // Where the robot starts. The Visualizer names
+    // this pose "start" unless you renamed
     // the start point. If you did, use that name here.
     private Pose startingPose() {
         return start;
@@ -86,17 +76,54 @@ public class VisualizerAuto extends LinearOpMode {
     // private DcMotorEx launcher;
 
     // Runs once during Init. Set up your motors and servos here.
+    private DcMotorEx launcher;
+    private DcMotor indexer1;
+    private DcMotor indexer2;
+    public final int LAUNCHER_TARGET_VELOCITY = 1250; //2678 RPM
+    public final int LAUNCHER_MIN_VELOCITY = 1215;
+
+
+    // Runs once during Init. Set up your motors and servos here.
     private void setUpMechanisms() {
         // Example:
         // intake = hardwareMap.get(DcMotor.class, "intake");
+        launcher=hardwareMap.get(DcMotorEx.class, "launcher");
+        indexer1=hardwareMap.get(DcMotor.class, "windmillmotor");
+        indexer2=hardwareMap.get(DcMotor.class, "windmillmotor2");
+        launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(40, 0, 0, 12.5));
+
     }
 
     // Runs once, right as a path starts. Good for turning things on.
     private void whenPathStarts(int pathNumber) {
+
         // Example: run the intake while path 2 drives.
         // if (pathNumber == 2) {
         //     intake.setPower(1);
         // }
+    }
+
+    private void shoot(double length){
+        launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
+        while(launcher.getVelocity()<LAUNCHER_MIN_VELOCITY){
+            idle();
+        }
+        ElapsedTime timer = new ElapsedTime();
+        while( timer.seconds() < length) {
+           if(launcher.getVelocity()<LAUNCHER_MIN_VELOCITY){
+               indexer1.setPower(0);
+               indexer2.setPower(0);
+           }else{indexer1.setPower(-1);
+               indexer2.setPower(-1);
+
+           }
+        }
+
+        indexer1.setPower(0);
+        indexer2.setPower(0);
+        launcher.setVelocity(0);
     }
 
     // Runs over and over while a path is driving. Keep it quick: no sleep() here.
@@ -152,7 +179,7 @@ public class VisualizerAuto extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
-
+        shoot(4.0);
         // Drive each path in order, running the robot actions along the way.
         for (int i = 0; i < paths.length && opModeIsActive(); i++) {
             int pathNumber = i + 1;
