@@ -133,6 +133,7 @@ public class BioBuzzStarterbotTeleopMecanum_lowpower extends OpMode {
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        flowerservo2.setDirection(Servo.Direction.REVERSE);
 
         /*
          * Setting zeroPowerBehavior to BRAKE enables a "brake mode". This causes the motor to
@@ -309,11 +310,14 @@ public class BioBuzzStarterbotTeleopMecanum_lowpower extends OpMode {
         } else if (gamepad1.left_bumper && launcher.getVelocity() > LAUNCHER_MIN_VELOCITY_LOWPOWER) {
             windmillServo.setPower(-1);
             windmillMotor.setPower(-1);
+
+
+
             windmillMotor2.setPower(-1);
             intakePower += 0.5;
         } else if (gamepad1.dpad_down) {
-            flowerservo.setPosition(1.0);
-            flowerservo2.setPosition(1.0);
+            flowerservo.setPosition(.70);
+            flowerservo2.setPosition(.67);
         } else if (gamepad1.dpad_up) {
             flowerservo.setPosition(0);
             flowerservo2.setPosition(0);

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
+import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
+
 import com.pedropathing.api.Paths;
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
@@ -10,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.pedro.Constants;
@@ -136,6 +139,8 @@ public class ShootFlowerPark extends LinearOpMode {
     private DcMotorEx launcher;
     private DcMotor indexer1;
     private DcMotor indexer2;
+    private Servo flowerservo2;
+    private DcMotor intake;
     public final int LAUNCHER_TARGET_VELOCITY = 1250; //2678 RPM
     public final int LAUNCHER_MIN_VELOCITY = 1215;
 
@@ -147,7 +152,11 @@ public class ShootFlowerPark extends LinearOpMode {
         launcher=hardwareMap.get(DcMotorEx.class, "launcher");
         indexer1=hardwareMap.get(DcMotor.class, "windmillmotor");
         indexer2=hardwareMap.get(DcMotor.class, "windmillmotor2");
+        flowerservo2=hardwareMap.get(Servo.class, "flowerservo2");
+        intake=hardwareMap.get(DcMotor.class, "intake");
         launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        flowerservo2.setDirection(Servo.Direction.REVERSE);
+        intake.setZeroPowerBehavior(BRAKE);
 
         launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(40, 0, 0, 12.5));
 

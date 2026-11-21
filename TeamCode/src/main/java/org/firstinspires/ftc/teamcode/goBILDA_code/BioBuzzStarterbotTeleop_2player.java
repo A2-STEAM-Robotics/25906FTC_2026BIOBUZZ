@@ -117,8 +117,8 @@ public class BioBuzzStarterbotTeleop_2player extends OpMode {
         rightIntakeServo = hardwareMap.get(CRServo.class, "right_intake_servo");
         windmillMotor = hardwareMap.get(DcMotor.class, "windmillmotor");
         windmillMotor2 = hardwareMap.get(DcMotor.class, "windmillmotor2");
-        flowerservo = hardwareMap.get(Servo.class, "flower_servo")
-        flowerservo2 = hardwareMap.get(Servo.class, "flower_servo2")
+        flowerservo = hardwareMap.get(Servo.class, "flowerservo");
+        flowerservo2 = hardwareMap.get(Servo.class, "flowerservo2");
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
          * because the axles point in opposite directions. Pushing the left stick forward
