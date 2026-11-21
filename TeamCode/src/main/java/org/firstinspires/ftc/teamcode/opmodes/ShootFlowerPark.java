@@ -159,7 +159,7 @@ public class ShootFlowerPark extends LinearOpMode {
         flowerservo2.setDirection(Servo.Direction.REVERSE);
         intake.setZeroPowerBehavior(BRAKE);
 
-        launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(40, 0, 0, 12.5));
+        launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, new PIDFCoefficients(45, 0, 0, 12.5));
 
     }
 
