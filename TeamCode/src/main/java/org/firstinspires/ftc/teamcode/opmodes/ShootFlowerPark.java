@@ -43,27 +43,27 @@ public class ShootFlowerPark extends LinearOpMode {
     // face left, then curves back to the start.
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
-    private final Pose start = poseFactory.of(59.9504, 6.6492, 270);
+    private final Pose start = poseFactory.of(58.7753, 9.1952, 270);
     private final Pose point1 = poseFactory.of(32.4013, 46.4986, 180);
     private final Pose point1Control1 = poseFactory.of(24.3465, 16.9844, 0);
     private final Pose point1Control2 = poseFactory.of(45.9488, 29.2885, 0);
     private final Pose point2Start = poseFactory.of(32.4013, 46.4986, 180);
-    private final Pose point2 = poseFactory.of(16.2671, 46.5388, 180);
-    private final Pose point3Start = poseFactory.of(16.2671, 46.5388, 180);
-    private final Pose point3 = poseFactory.of(32.7901, 46.4199, 180);
-    private final Pose point4Start = poseFactory.of(32.7901, 46.4199, 180);
-    private final Pose point4 = poseFactory.of(61.0632, 131.6075, 90);
-    private final Pose point4Control1 = poseFactory.of(0, 106.9129, 0);
-    private final Pose point4Control2 = poseFactory.of(61.6044, 105.9503, 0);
-    private final Pose point5Start = poseFactory.of(61.0632, 131.6075, 90);
-    private final Pose point5 = poseFactory.of(46.3559, 120.4901, 90);
-    private final Pose point6Start = poseFactory.of(46.3559, 120.4901, 90);
-    private final Pose point6 = poseFactory.of(46.3428, 129.5898, 90);
-    private final Pose point7Start = poseFactory.of(46.3428, 129.5898, 90);
-    private final Pose point7 = poseFactory.of(46.3637, 119.8282, 90);
-    private final Pose point8Start = poseFactory.of(46.3637, 119.8282, 90);
-    private final Pose point8 = poseFactory.of(61.1361, 131.5985, 90);
-    private final Pose point9Start = poseFactory.of(61.1361, 131.5985, 90);
+    private final Pose point2 = poseFactory.of(12.1544, 46.343, 180);
+    private final Pose point3Start = poseFactory.of(12.1544, 46.343, 180);
+    private final Pose point3 = poseFactory.of(32.5943, 46.42, 180);
+    private final Pose point4Start = poseFactory.of(32.5943, 46.42, 180);
+    private final Pose point4 = poseFactory.of(58.3213, 130.2366, 90);
+    private final Pose point4Control1 = poseFactory.of(17.4305, 129.4354, 0);
+    private final Pose point4Control2 = poseFactory.of(57.0999, 85.778, 0);
+    private final Pose point5Start = poseFactory.of(58.3213, 130.2366, 90);
+    private final Pose point5 = poseFactory.of(46.16, 113.0478, 90);
+    private final Pose point6Start = poseFactory.of(46.16, 113.0478, 90);
+    private final Pose point6 = poseFactory.of(47.1262, 129.5898, 90);
+    private final Pose point7Start = poseFactory.of(47.1262, 129.5898, 90);
+    private final Pose point7 = poseFactory.of(46.5596, 113.3653, 90);
+    private final Pose point8Start = poseFactory.of(46.5596, 113.3653, 90);
+    private final Pose point8 = poseFactory.of(58.3943, 130.4234, 90);
+    private final Pose point9Start = poseFactory.of(58.3943, 130.4234, 90);
     private final Pose point9 = poseFactory.of(13.1459, 119.9646, 270);
     private final Pose point9Control1 = poseFactory.of(48.5626, 109.0937, 0);
 
@@ -169,7 +169,8 @@ public class ShootFlowerPark extends LinearOpMode {
 
         // Example: run the intake while path 2 drives.
          if (pathNumber == 1) {
-             shoot(4.0);
+             shoot(3.0);
+
          }
     }
 
@@ -214,18 +215,20 @@ public class ShootFlowerPark extends LinearOpMode {
         if (pathNumber == 2) {
             // intake from the flower
             intake.setPower(1);
-            holdFor(3);
-            intake.setPower(0);
+            holdFor(2);
+
          }
 
         if (pathNumber == 3) {
+
             // Raise flower scoop
             flowerservo2.setPosition(0);
         }
 
         if (pathNumber == 4) {
+            intake.setPower(0);
             // shoot 4 pollen
-            shoot(4);
+            shoot(3);
         }
 
         if (pathNumber == 5) {
@@ -238,17 +241,19 @@ public class ShootFlowerPark extends LinearOpMode {
             // intake from the flower
             intake.setPower(1);
             holdFor(3);
-            intake.setPower(0);
+
         }
 
         if (pathNumber == 7) {
+
+            intake.setPower(0);
         // Raise flower scoop
         flowerservo2.setPosition(.67);
         }
 
         if (pathNumber == 8) {
             // shoot 4 pollen
-            shoot(4);
+            shoot(3);
 
         }
 
@@ -293,8 +298,9 @@ public class ShootFlowerPark extends LinearOpMode {
         // Drive each path in order, running the robot actions along the way.
         for (int i = 0; i < paths.length && opModeIsActive(); i++) {
             int pathNumber = i + 1;
-            follower.follow(paths[i]);
             whenPathStarts(pathNumber);
+            follower.follow(paths[i]);
+
 
             while (opModeIsActive() && follower.following()) {
                 follower.update();
