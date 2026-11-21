@@ -44,13 +44,14 @@ public class ShootFlowerPark extends LinearOpMode {
     private final PoseFactory poseFactory = PoseFactory.degrees();
 
     private final Pose start = poseFactory.of(59.9504, 6.6492, 270);
-    private final Pose point1 = poseFactory.of(19.0836, 46.8903, 180);
-    private final Pose point1Control1 = poseFactory.of(27.2842, 13.4591, 0);
-    private final Pose point2Start = poseFactory.of(19.0836, 46.8903, 180);
-    private final Pose point2 = poseFactory.of(11.5668, 46.7347, 180);
-    private final Pose point3Start = poseFactory.of(11.5668, 46.7347, 180);
-    private final Pose point3 = poseFactory.of(19.4724, 46.8116, 180);
-    private final Pose point4Start = poseFactory.of(19.4724, 46.8116, 180);
+    private final Pose point1 = poseFactory.of(32.4013, 46.4986, 180);
+    private final Pose point1Control1 = poseFactory.of(24.3465, 16.9844, 0);
+    private final Pose point1Control2 = poseFactory.of(45.9488, 29.2885, 0);
+    private final Pose point2Start = poseFactory.of(32.4013, 46.4986, 180);
+    private final Pose point2 = poseFactory.of(16.2671, 46.5388, 180);
+    private final Pose point3Start = poseFactory.of(16.2671, 46.5388, 180);
+    private final Pose point3 = poseFactory.of(32.7901, 46.4199, 180);
+    private final Pose point4Start = poseFactory.of(32.7901, 46.4199, 180);
     private final Pose point4 = poseFactory.of(61.0632, 131.6075, 90);
     private final Pose point4Control1 = poseFactory.of(0, 106.9129, 0);
     private final Pose point4Control2 = poseFactory.of(61.6044, 105.9503, 0);
@@ -67,7 +68,7 @@ public class ShootFlowerPark extends LinearOpMode {
     private final Pose point9Control1 = poseFactory.of(48.5626, 109.0937, 0);
 
     public Path path1() {
-        return Paths.curve(start, point1Control1, point1).linear(start, point1);
+        return Paths.curve(start, point1Control1, point1Control2, point1).linear(start, point1);
     }
 
     public Path path2() {
@@ -207,6 +208,7 @@ public class ShootFlowerPark extends LinearOpMode {
         if (pathNumber == 1) {
             // lower flower scoop
             flowerservo2.setPosition(0.67);
+            holdFor(1);
         }
 
         if (pathNumber == 2) {
@@ -229,6 +231,7 @@ public class ShootFlowerPark extends LinearOpMode {
         if (pathNumber == 5) {
             // lower flower scoop
             flowerservo2.setPosition(.67);
+            holdFor(1);
          }
 
         if (pathNumber == 6) {
