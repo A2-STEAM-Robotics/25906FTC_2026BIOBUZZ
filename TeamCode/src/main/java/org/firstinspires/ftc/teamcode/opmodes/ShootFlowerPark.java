@@ -63,7 +63,8 @@ public class ShootFlowerPark extends LinearOpMode {
     private final Pose point8Start = poseFactory.of(46.3637, 119.8282, 90);
     private final Pose point8 = poseFactory.of(61.1361, 131.5985, 90);
     private final Pose point9Start = poseFactory.of(61.1361, 131.5985, 90);
-    private final Pose point9 = poseFactory.of(11.7749, 119.9646, 270);
+    private final Pose point9 = poseFactory.of(13.1459, 119.9646, 270);
+    private final Pose point9Control1 = poseFactory.of(48.5626, 109.0937, 0);
 
     public Path path1() {
         return Paths.curve(start, point1Control1, point1).linear(start, point1);
@@ -98,7 +99,7 @@ public class ShootFlowerPark extends LinearOpMode {
     }
 
     public Path path9() {
-        return Paths.line(point9Start, point9).linear(point9Start, point9);
+        return Paths.curve(point9Start, point9Control1, point9).linear(point9Start, point9);
     }
     // ====================== PASTE END ======================
 
@@ -166,23 +167,25 @@ public class ShootFlowerPark extends LinearOpMode {
     private void whenPathStarts(int pathNumber) {
 
         // Example: run the intake while path 2 drives.
-        // if (pathNumber == 2) {
-        //     intake.setPower(1);
-        // }
+         if (pathNumber == 1) {
+             shoot(4.0);
+         }
     }
 
     private void shoot(double length){
         launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
         while(opModeIsActive() && launcher.getVelocity()<LAUNCHER_MIN_VELOCITY){
-            idle();
+            follower.update();
         }
         ElapsedTime timer = new ElapsedTime();
         while(opModeIsActive() && timer.seconds() < length) {
-           if(launcher.getVelocity()<LAUNCHER_MIN_VELOCITY){
+           follower.update();
+            if(launcher.getVelocity()<LAUNCHER_MIN_VELOCITY){
                indexer1.setPower(0);
                indexer2.setPower(0);
            }else{indexer1.setPower(-1);
                indexer2.setPower(-1);
+
 
            }
         }
@@ -200,15 +203,54 @@ public class ShootFlowerPark extends LinearOpMode {
     // The robot holds its spot while this runs. To wait, use holdFor(seconds), not sleep().
     private void whenPathEnds(int pathNumber) {
         // Example: stop the intake after path 2, then shoot for 2 seconds after path 3.
-        // if (pathNumber == 2) {
-        //     intake.setPower(0);
-        // }
-        // if (pathNumber == 3) {
-        //     launcher.setVelocity(1250);
-        //     holdFor(2.0);
-        //     launcher.setVelocity(0);
-        // }
+
+        if (pathNumber == 1) {
+            // lower flower scoop
+            flowerservo2.setPosition(0.67);
+        }
+
+        if (pathNumber == 2) {
+            // intake from the flower
+            intake.setPower(1);
+            holdFor(3);
+            intake.setPower(0);
+         }
+
+        if (pathNumber == 3) {
+            // Raise flower scoop
+            flowerservo2.setPosition(0);
+        }
+
+        if (pathNumber == 4) {
+            // shoot 4 pollen
+            shoot(4);
+        }
+
+        if (pathNumber == 5) {
+            // lower flower scoop
+            flowerservo2.setPosition(.67);
+         }
+
+        if (pathNumber == 6) {
+            // intake from the flower
+            intake.setPower(1);
+            holdFor(3);
+            intake.setPower(0);
+        }
+
+        if (pathNumber == 7) {
+        // Raise flower scoop
+        flowerservo2.setPosition(.67);
+        }
+
+        if (pathNumber == 8) {
+            // shoot 4 pollen
+            shoot(4);
+
+        }
+
     }
+
     // =============== END ROBOT ACTIONS ===============
 
     private Follower follower;
@@ -245,7 +287,6 @@ public class ShootFlowerPark extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
-        shoot(4.0);
         // Drive each path in order, running the robot actions along the way.
         for (int i = 0; i < paths.length && opModeIsActive(); i++) {
             int pathNumber = i + 1;
