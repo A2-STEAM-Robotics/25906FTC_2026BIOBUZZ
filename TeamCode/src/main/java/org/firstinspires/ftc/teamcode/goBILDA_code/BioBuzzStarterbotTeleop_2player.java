@@ -31,6 +31,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /*
  * This file includes a teleop (driver-controlled) file for the goBILDA® StarterBot with Mecanum
@@ -63,6 +64,8 @@ public class BioBuzzStarterbotTeleop_2player extends OpMode {
     private CRServo windmillServo = null;
     private DcMotor windmillMotor = null;
     private DcMotor windmillMotor2 = null;
+    private Servo flowerservo = null;
+    private Servo flowerservo2 = null;
 
 
     /*
@@ -114,7 +117,8 @@ public class BioBuzzStarterbotTeleop_2player extends OpMode {
         rightIntakeServo = hardwareMap.get(CRServo.class, "right_intake_servo");
         windmillMotor = hardwareMap.get(DcMotor.class, "windmillmotor");
         windmillMotor2 = hardwareMap.get(DcMotor.class, "windmillmotor2");
-
+        flowerservo = hardwareMap.get(Servo.class, "flower_servo")
+        flowerservo2 = hardwareMap.get(Servo.class, "flower_servo2")
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
          * because the axles point in opposite directions. Pushing the left stick forward
@@ -126,6 +130,8 @@ public class BioBuzzStarterbotTeleop_2player extends OpMode {
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        flowerservo2.setDirection(Servo.Direction.REVERSE);
+
 
         /*
          * Setting zeroPowerBehavior to BRAKE enables a "brake mode". This causes the motor to
@@ -299,6 +305,12 @@ public class BioBuzzStarterbotTeleop_2player extends OpMode {
             windmillMotor.setPower(-.5);
             
             intakePower += 0.5;
+        } else if (gamepad1.dpad_down) {
+            flowerservo.setPosition(.70);
+            flowerservo2.setPosition(.67);
+        } else if (gamepad1.dpad_up) {
+            flowerservo.setPosition(0);
+            flowerservo2.setPosition(0);
         } else {
             windmillServo.setPower(0);
             windmillMotor.setPower(0);
